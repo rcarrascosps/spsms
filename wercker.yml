@@ -12,4 +12,4 @@ build:
       code: mvn package
     - script:
       name: Confirm Maven Package
-      code: echo "Paquete creado" && ls -ltr
+      code: echo "Paquete creado" && ls -ltr ./target/*
