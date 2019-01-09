@@ -27,6 +27,7 @@ build:
       name: Container
       code: echo "Container successfully created"
 
+# deploying to k8 cluster
 deploy-to-kubernetes:
     box: openjdk:8-jre-alpine
     steps:
