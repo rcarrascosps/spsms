@@ -12,7 +12,7 @@ build:
       code: mvn package && echo "Package successfully created"
     
     - internal/docker-push:
-            entrypoint: mkdir /app
+            cmd: mkdir /app
             cmd: cp libs /app/libs
             cmd: ${project.artifactId}.jar /app
             cmd: java -jar /app/${project.artifactId}.jar
