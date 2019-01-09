@@ -14,7 +14,7 @@ build:
     - internal/docker-push:
             cmd: mkdir /app
             cmd: cp libs /app/libs
-            cmd: quickstart-mp.jar /app
+            cmd: cp quickstart-mp.jar /app
             cmd: java -jar /app/quickstart-mp.jar
             working-dir: $WERCKER_ROOT
             tag: $WERCKER_GIT_COMMIT
