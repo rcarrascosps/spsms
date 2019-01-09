@@ -10,3 +10,6 @@ build:
     - script:
       name: Maven Package
       code: mvn package
+    - script:
+      name: Confirm Maven Package
+      code: echo "Paquete creado" && ls -ltr
