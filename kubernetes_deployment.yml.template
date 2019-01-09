@@ -5,25 +5,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: quickstart-mp
+  name: microp
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: quickstart-mp
+      app: microp
   template:
     metadata:
       labels:
-        app: quickstart-mp
+        app: microp
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
-      - name: quickstart-mp-server
+      - name: microp-server
         image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
         ports:
-        - name: quickstart-mp-server
+        - name: microp-server
           containerPort: 8080
           protocol: TCP
       imagePullSecrets:
