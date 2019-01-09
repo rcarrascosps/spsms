@@ -14,8 +14,8 @@ build:
     - internal/docker-push:
             cmd: mkdir /app
             cmd: cp libs /app/libs
-            cmd: ${project.artifactId}.jar /app
-            cmd: java -jar /app/${project.artifactId}.jar
+            cmd: quickstart-mp.jar /app
+            cmd: java -jar /app/quickstart-mp.jar
             working-dir: $WERCKER_ROOT
             tag: $WERCKER_GIT_COMMIT
             ports: "8080"
