@@ -12,9 +12,13 @@ build:
       code: mvn package && echo "Package successfully created"
     
     - internal/docker-push:
+            cmd: echo "Creating app folder"
             cmd: mkdir /app
+            cmd: echo "Copying libs"
             cmd: cp target/libs /app/libs
+            cmd: echo "Copying jar"
             cmd: cp target/quickstart-mp.jar /app
+            cmd: echo "Executing jar"
             cmd: java -jar /app/quickstart-mp.jar
             working-dir: $WERCKER_ROOT
             tag: $WERCKER_GIT_COMMIT
