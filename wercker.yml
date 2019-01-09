@@ -1,21 +1,18 @@
+# docker box definition
 box:
   id: maven:latest
+  ports:
+    - "8080"
 
+# defining build pipeline
 build:
-    box: maven:latest
-    steps:
-
-    # Check that our application's tests are passing. Since this is a python
-    # application, our entry script will also install the application's dependencies
-    # with Virtualenv
+  steps:
     - script:
-        name: Maven Package
-        code: mvn package && echo "Package successfully created"
-
-        # Take our tested application revision and its dependencies, bake it in to a
-    # Docker image, and push to OCIR.
+      name: Maven Package
+      code: mvn package && echo "Package successfully created"
+    
     - internal/docker-push:
-			entrypoint: mkdir /app
+            entrypoint: mkdir /app
             cmd: cp libs /app/libs
             cmd: ${project.artifactId}.jar /app
             cmd: java -jar /app/${project.artifactId}.jar
@@ -26,6 +23,9 @@ build:
             password: $DOCKER_PASSWORD
             repository: $DOCKER_REPO
             registry: https://iad.ocir.io/v2
+    - script:
+      name: Container
+      code: echo "Container successfully created"
 
 deploy-to-kubernetes:
     box: openjdk:8-jre-alpine
@@ -44,7 +44,6 @@ deploy-to-kubernetes:
         code: |
           mkdir $WERCKER_OUTPUT_DIR/kubernetes
           mv kubernetes_*.yml $WERCKER_OUTPUT_DIR/kubernetes
-
     # `apply` is a good command to use here, as it'll create Kubernetes entities if they are missing.
     - kubectl:
         name: deploy to kubernetes
