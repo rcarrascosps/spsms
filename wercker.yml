@@ -9,7 +9,21 @@ build:
   steps:
     - script:
       name: Maven Package
-      code: mvn package
-    - script:
-      name: Confirm Maven Package
-      code: echo "Paquete creado" && ls -ltr ./target/*
+      code: mvn package && echo "Package successfully created"
+
+prepare-container:
+    box: openjdk:8-jre-alpine
+    steps:
+
+    - internal/docker-push:
+            entrypoint: mkdir /app
+            cmd: cp libs /app/libs
+            cmd: ${project.artifactId}.jar /app
+            cmd: java -jar /app/${project.artifactId}.jar
+            working-dir: $WERCKER_ROOT
+            tag: $WERCKER_GIT_COMMIT
+            ports: "8080"
+            username: $DOCKER_USERNAME
+            password: $DOCKER_PASSWORD
+            repository: $DOCKER_REPO
+            registry: https://iad.ocir.io/v2
