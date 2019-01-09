@@ -1,0 +1,13 @@
+# docker box definition
+box:
+  id: openjdk
+  ports:
+    - "8080"
+
+# defining build pipeline
+build:
+  steps:
+    - script:
+      name: Maven Package
+      code: |
+        ./mvn package
