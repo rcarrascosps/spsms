@@ -1,12 +1,7 @@
-# docker box definition
-box:
-  id: maven:latest
-  ports:
-    - "8080"
-
 # defining build pipeline
 build:
-  steps:
+    box: maven:latest
+    steps:
     - script:
       name: Maven Package
       code: mvn package && echo "Package successfully created"
@@ -23,9 +18,6 @@ build:
             password: $DOCKER_PASSWORD
             repository: $DOCKER_REPO
             registry: https://iad.ocir.io/v2
-    - script:
-      name: Container
-      code: echo "Container successfully created"
 
 deploy-to-kubernetes:
     box: openjdk:8-jre-alpine
@@ -44,6 +36,7 @@ deploy-to-kubernetes:
         code: |
           mkdir $WERCKER_OUTPUT_DIR/kubernetes
           mv kubernetes_*.yml $WERCKER_OUTPUT_DIR/kubernetes
+
     # `apply` is a good command to use here, as it'll create Kubernetes entities if they are missing.
     - kubectl:
         name: deploy to kubernetes
