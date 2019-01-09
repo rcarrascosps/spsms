@@ -1,13 +1,18 @@
-# defining build pipeline
 build:
     box: maven:latest
     steps:
+
+    # Check that our application's tests are passing. Since this is a python
+    # application, our entry script will also install the application's dependencies
+    # with Virtualenv
     - script:
-      name: Maven Package
-      code: mvn package && echo "Package successfully created"
-    
+        name: Maven Package
+        code: mvn package && echo "Package successfully created"
+
+        # Take our tested application revision and its dependencies, bake it in to a
+    # Docker image, and push to OCIR.
     - internal/docker-push:
-            entrypoint: mkdir /app
+			entrypoint: mkdir /app
             cmd: cp libs /app/libs
             cmd: ${project.artifactId}.jar /app
             cmd: java -jar /app/${project.artifactId}.jar
