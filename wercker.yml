@@ -1,3 +1,6 @@
+box:
+  id: maven:latest
+
 build:
     box: maven:latest
     steps:
